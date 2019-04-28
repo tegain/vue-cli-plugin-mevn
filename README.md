@@ -17,7 +17,7 @@ cd my-app
 Add the plugin to your project
 
 ```bash
-vue add mevn
+vue add @tegain/vue-cli-plugin-mevn
 ```
 
 You'll then have to configure your API and database access with a few questions:
