@@ -6,7 +6,7 @@ Easily Add MEVN (MongoDB, Express, Vue, Node), ES6-ready stack to your Vue-CLI p
 
 ## Installation
 
-Generate a project using vue-cli 3.0
+Generate a project using vue-cli 3.0 (or use your current Vue-CLI project)
 
 ```bash
 vue create my-app
@@ -24,15 +24,15 @@ You'll then have to configure your API and database access with a few questions:
 
 ```bash
 # API Port (default: 5000). 
-# Access to the API at http://localhost:<PORT>
+# Access the API at http://localhost:<PORT>
 - Enter API PORT
 
 # Database connection URL (local or remote). 
 # Must be a valid `mongodb://` URL
 - Enter Mongo database url 
 
-# API prefix (default: none). Add a global prefix to your API URLS. 
-# Example: /api/v1 -> Access to your API at http://localhost:<PORT>/api/v1
+# API prefix (default: none). Add a global prefix to your API routes. 
+# Example: /api/v1 -> Access the API at http://localhost:<PORT>/api/v1
 - Enter API prefix
 ```
 
@@ -45,7 +45,7 @@ containing a boilerplate to start using Express and MongoDB.
 
 Features:
 
-- *Server*: Express [docs](https://expressjs.com)
+- *Server*: Express - [docs](https://expressjs.com)
 - *Database*: MongoDB (with Mongoose - [docs](https://mongoosejs.com/docs/))
 - *Logging*: Morgan - [docs](https://github.com/expressjs/morgan)
 - Environment-specific variables
@@ -209,7 +209,7 @@ Using the `addModule` instance method, you can map an API base route with your m
 - your module name, used as a route mapping
 - your module entrypoint
 
-For example, for the `UsersModule` above, your module will respond to `http//your-api-url/users` routes.
+For example, for the `UsersModule` above, your module will respond to `http://localhost:<PORT><PREFIX>/users` routes.
 
 To view a functional example, see:
 - Module [/generator/template/api/src/modules/example](./generator/template/api/src/modules/example).
