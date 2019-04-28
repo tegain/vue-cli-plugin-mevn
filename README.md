@@ -36,9 +36,7 @@ You'll then have to configure your API and database access with a few questions:
 - Enter API prefix
 ```
 
-Answer the few API & database configuration questions and you're done!  
-
-
+Answer the few questions and you're done!  
 
 ## What it does
 
@@ -47,13 +45,13 @@ containing a boilerplate to start using Express and MongoDB.
 
 Features:
 
-- *Server*: Express
-- *Database*: MongoDB (with Mongoose)
-- *Logging*: Morgan
+- *Server*: Express [docs](https://expressjs.com)
+- *Database*: MongoDB (with Mongoose - [docs](https://mongoosejs.com/docs/))
+- *Logging*: Morgan - [docs](https://github.com/expressjs/morgan)
 - Environment-specific variables
 - ESLint
 - Modularized architecture
-- Custom Exceptions
+- Custom, preformatted Exceptions
 
 ### Folders structure
 
@@ -95,6 +93,8 @@ so you can start the API directly from your project root:
 
 ## Modules
 
+### Architecture
+
 The API project is built so a module folder contains every files needed to this module:
 
 ```bash
@@ -105,21 +105,97 @@ The API project is built so a module folder contains every files needed to this 
    |-moduleName.service.js      # Module service, handling communication with the database
 ```
 
-#### Add a module
+### (How-to) Create a module
+
+In the `/api/modules` folder, create a new folder with the name of your module.
+We'll create a **Users** module, so the folders architecture will look like this:
+
+```bash
+|-api
+  |-src
+    |-modules
+      |-users
+         |-models
+           |-user.model.js
+         |-users.module.js
+         |-users.controller.js
+         |-users.service.js
+      |- ... other modules
+```
+
+#### Creating the module entrypoint
+
+```js
+// users.module.js
+import express from 'express';
+import { UsersController } from './users.controller';
+
+export const UsersModule = express.Router();
+
+UsersModule.get('/', UsersController.findAll);
+UsersModule.post('/', UsersController.addUser);
+```
+
+#### Creating the module controller
+
+```js
+// users.controller.js
+import { UsersService } from './users.service';
+
+export class UsersController {
+	// Return all users
+	static async findAll (req, res) {
+		const users = await UsersService.findAll();
+		return res.status(200).json(users);
+	}
+	
+	// Add a new user
+	static async addUser (req, res) {
+		const user = await UsersService.addOne(req.body);
+		return res.status(201).json(user);
+	}
+}
+```
+
+#### Creating the module service (aka actually dealing with the database)
+
+```js
+// users.service.js
+import { UserModel } from './models/user.model';
+import { NotFoundException } from "../../utils/exceptions";
+
+export class UsersService {
+	static async findAll () {
+		return await ExampleModel.find().exec();
+	}
+
+	static async findById (id) {
+		const document = await ExampleModel.findById(id);
+		if (!document) throw new NotFoundException();
+		return document;
+	}
+
+	static async addOne (data) {
+		return await ExampleModel.create(data);
+	}
+}
+```
+
+### (How-to) Add a module to the API
 
 Then, in `app.js`, import and initialize your module inside the `initializeModules()` class method:
 
 ```js
 // /api/app.js
-import { ExampleModule } from './modules/example/example.module';
+import { UsersModule } from './modules/users/users.module';
 
 class AppFactory {
   // ...
 	
   initializeModules () {
     this.addModule(
-    	'examples',     // Module route mapping
-    	ExampleModule   // Module entrypoint
+    	'users',     // Module route mapping
+    	UsersModule   // Module entrypoint
     );
     
     // ... Other modules
@@ -130,18 +206,11 @@ class AppFactory {
 Using the `addModule` instance method, you can map an API base route with your module.
 
 `addModule` takes two parameters: 
-- your module name, used as a base route mapping
+- your module name, used as a route mapping
 - your module entrypoint
 
-For example, for the `ExampleModule` above, your module will respond to `http//your-api-url/examples` routes.
-If you wish your `ExampleModule` to respond to `/users` routes, just replace the method for this one:
-
-```js
-// app.js
-this.addModule('users', ExampleModule);
-```
+For example, for the `UsersModule` above, your module will respond to `http//your-api-url/users` routes.
 
 To view a functional example, see:
 - Module [/generator/template/api/src/modules/example](./generator/template/api/src/modules/example).
 - Module initialization [/generator/template/api/src/app.js](./generator/template/api/src/app.js).
-
