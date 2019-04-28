@@ -1,11 +1,8 @@
 {
-  "name": "vue-cli-plugin-mevn",
+  "name": "@tegain/vue-cli-plugin-mevn",
   "version": "0.1.0",
-  "description": "Add MEVN REST API to your Vue-CLI project",
+  "description": "Add MEVN REST API boilerplate to your Vue-CLI project",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Thomas Egain <thomas.egain@gmail.com>",
+  "author": "Thomas Egain <hello@thomasegain.fr>",
   "license": "ISC"
 }
