@@ -105,6 +105,8 @@ The API project is built so a module folder contains every files needed to this 
    |-moduleName.service.js      # Module service, handling communication with the database
 ```
 
+#### Add a module
+
 Then, in `app.js`, import and initialize your module inside the `initializeModules()` class method:
 
 ```js
@@ -114,8 +116,13 @@ import { ExampleModule } from './modules/example/example.module';
 class AppFactory {
 	// ...
 	
-	initializeModules () {
-    this.addModule('examples', ExampleModule);
+  initializeModules () {
+    this.addModule(
+    	'examples',     // Module route mapping
+    	ExampleModule   // Module entrypoint
+    );
+    
+    // ... Other modules
   }
 }
 ```
