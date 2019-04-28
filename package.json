@@ -4,5 +4,21 @@
   "description": "Add MEVN REST API boilerplate to your Vue-CLI project",
   "main": "index.js",
   "author": "Thomas Egain <hello@thomasegain.fr>",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tegain/vue-cli-plugin-mevn.git"
+  },
+  "keywords": [
+    "vue",
+    "vue-cli",
+    "mevn",
+    "mongodb",
+    "express",
+    "mongoose"
+  ],
+  "bugs": {
+    "url": "https://github.com/tegain/vue-cli-plugin-mevn/issues"
+  },
+  "homepage": "https://github.com/tegain/vue-cli-plugin-mevn#readme"
 }
