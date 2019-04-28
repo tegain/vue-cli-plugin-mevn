@@ -114,7 +114,7 @@ Then, in `app.js`, import and initialize your module inside the `initializeModul
 import { ExampleModule } from './modules/example/example.module';
 
 class AppFactory {
-	// ...
+  // ...
 	
   initializeModules () {
     this.addModule(
@@ -143,5 +143,5 @@ this.addModule('users', ExampleModule);
 
 To view a functional example, see:
 - Module [/generator/template/api/src/modules/example](./generator/template/api/src/modules/example).
-- Module initialization [/generator/template/api/src/app.js](./generator/template/api/app.js).
+- Module initialization [/generator/template/api/src/app.js](./generator/template/api/src/app.js).
 
