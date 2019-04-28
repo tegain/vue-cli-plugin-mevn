@@ -36,6 +36,12 @@ You'll then have to configure your API and database access with a few questions:
 - Enter API prefix
 ```
 
+Now you just have to install API dependencies, by running the following NPM command **from your Vue project root**:
+
+```bash
+npm run api:install
+```
+
 Answer the few questions and you're done!  
 
 ## What it does

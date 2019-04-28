@@ -9,7 +9,7 @@
     "start": "cross-env NODE_ENV=production babel-node src/main.js",
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node src/main.js"
   },
-  "author": "Thomas Egain <thomas.egain@gmail.com>",
+  "author": "Thomas Egain <hello@thomasegain.fr>",
   "license": "ISC",
   "engines": {
     "node": ">= 10.13"

@@ -74,7 +74,7 @@ class AppFactory {
 	}
 
 	getIndex () {
-		this.app.get('/', (req, res) => {
+		this.app.get(__API_PREFIX, (req, res) => {
 			const { name, version, author, description } = require(path.join(__BASEDIR, 'package.json'));
 			res.status(200).json({ name, version, author, description });
 		});
