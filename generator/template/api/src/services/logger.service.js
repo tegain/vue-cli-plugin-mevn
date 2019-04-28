@@ -1,10 +1,11 @@
-import * as fs from 'fs';
+import fs from 'fs';
+import path from 'path';
 import morgan from 'morgan';
 import chalk from 'chalk';
 
 export class LoggerService {
 	constructor () {
-		const customLog = function (tokens, req, res) {
+		const developmentLog = function (tokens, req, res) {
 			return [
 				chalk.green('[API] ' + process.pid + '   '),
 				chalk.white(new Date(tokens.date(req, res)).toLocaleString() + ' '),
@@ -18,8 +19,10 @@ export class LoggerService {
 				chalk.yellow(tokens['response-time'](req, res) + ' ms'),
 			].join(' ');
 		};
-		const logLevel = process.env.NODE_ENV === 'production' ? 'combined': customLog;
-		this.logger = morgan(logLevel);
+		// const logLevel = process.env.NODE_ENV === 'production' ? 'combined' : developmentLog;
+		this.logger = process.env.NODE_ENV === 'production'
+			? morgan('combined', { stream: this.writeToFile() })
+			: morgan(developmentLog);
 	}
 
 	/**
@@ -59,6 +62,14 @@ export class LoggerService {
 	}
 
 	writeToFile () {
-		const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+		const dir = path.join(__BASEDIR, 'logs');
+		const target = path.join(dir, 'access.log');
+		const options = { flags: 'a' };
+
+		if (!fs.existsSync(dir)){
+			fs.mkdirSync(dir);
+		}
+
+		return fs.createWriteStream(target, options);
 	}
 }

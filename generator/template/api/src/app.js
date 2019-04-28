@@ -1,12 +1,14 @@
 import path from 'path';
 import express from 'express';
 import * as bodyParser from 'body-parser';
+import { startClient } from './database/connect';
 import { LoggerService } from './services/logger.service';
 
 import { ExampleModule } from './modules/example/example.module';
 
 class AppFactory {
 	constructor () {
+		this.initDatabaseConnection();
 		this.app = express();
 
 		/** Set config & middlewares */
@@ -16,21 +18,49 @@ class AppFactory {
 		this.initializeModules();
 
 		this.getIndex();
+
+		this.app.use('*', (req, res) => {
+			res.status(404).json({
+				statusCode: 404,
+				error: 'Not found',
+			});
+		})
 	}
 
+	/**
+	 * Initialize database connection
+	 *
+	 * @private
+	 */
+	initDatabaseConnection () {
+		startClient()
+			.then(() => {
+				LoggerService.log('Successfully connected to database', 'DatabaseConnection');
+			})
+			.catch(error => {
+				LoggerService.error(error.message, 'DatabaseConnection');
+			});
+	}
+
+	/**
+	 * Initialize application modules
+	 *
+	 * @private
+	 */
 	initializeModules () {
-		this.addModule(ExampleModule);
+		this.addModule('examples', ExampleModule);
 	}
 
 	/**
 	 * Inject Module
 	 *
+	 * @param {string} prefix
 	 * @param {Router} Module
 	 *
 	 * @private
 	 */
-	addModule (Module) {
-		this.app.use(__API_PREFIX, Module);
+	addModule (prefix, Module) {
+		this.app.use(`${__API_PREFIX}/${prefix}`, Module);
 	}
 
 	/**
@@ -44,10 +74,10 @@ class AppFactory {
 	}
 
 	getIndex () {
-		this.app.use('/', (req, res) => {
+		this.app.get('/', (req, res) => {
 			const { name, version, author, description } = require(path.join(__BASEDIR, 'package.json'));
 			res.status(200).json({ name, version, author, description });
-		})
+		});
 	}
 }
 
