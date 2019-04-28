@@ -1,6 +1,6 @@
 {
   "name": "@tegain/vue-cli-plugin-mevn",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Add MEVN REST API boilerplate to your Vue-CLI project",
   "main": "index.js",
   "author": "Thomas Egain <hello@thomasegain.fr>",
