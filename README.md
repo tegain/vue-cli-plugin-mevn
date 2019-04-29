@@ -42,7 +42,7 @@ Now you just have to install API dependencies, by running the following NPM comm
 npm run api:install
 ```
 
-Answer the few questions and you're done!  
+Aand you're done!
 
 ## What it does
 
@@ -82,7 +82,7 @@ src (your Vue project)
 
 ## Start the API
 
-You can start the API by running the following NPM command:
+You can start the API by running the following NPM command, from the `api/` folder:
 
 ```bash
 # Production build
